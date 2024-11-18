@@ -1,16 +1,18 @@
 const http = require('http')
 const querystring = require('querystring')
 const server = http.createServer((request,response)=>{
-    const method = request.method;
-    const url = request.url;
-    console.log('method:',method);
-    console.log('url:',url);
-    request.query = querystring.parse(url.split('?')[1]);
-    console.log('query:',request.query);
-    //转JSON返回
-    response.end(
-        JSON.stringify(request.query)
-    );
+    if(request.method === 'POST')//===表示类型、值完全相等
+    {
+        let postdata = "";
+        request.on('data',chunk=>{
+            postdata+=chunk.tostring();
+        })
+        request.on('end',()=>{
+            console.log("数据接收完毕");
+            response.end(JSON.stringify('状态：接收完毕'));
+        })
+        console.log('postdata:',postdata)
+    }
 });
 server.listen(5000,()=>{
     console.log('server running at port 5000');
