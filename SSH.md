@@ -45,7 +45,7 @@ IdentityFile ~/.ssh/id_rsa
 ```
 当我们访问github.com时，指定使用该路径下这个文件中的密钥  
 到这我们就有权限执行git clone <SSH仓库地址> 克隆GitHub远程仓库到本地了
-## 全部完成
+## 应用场景二：用SSH密钥登录远程服务器
 + 将SSH密钥粘贴到远程Linux服务器的~/.ssh/authorized_keys路径下
 + 在本地的C\User\用户名\.ssh\config文件中添加以下内容  
 ```
@@ -55,3 +55,10 @@ Host <显示的服务器名字>
     User <服务端用户名>
     IdentityFile C:\Users\15913\.ssh\id_rsa
 ```
+# 问题与解决
++ github登录不上
+  >- cmd输入：ping github.com 查看能否访问
+  >- cmd ssh -vT git@github.com查看是否DNS被污染，github.com域名被解析为127.0.0.1(IPv4)和::1(IPv6)
+  >- C:\Windows\System32\drivers\etc\hosts 追加"<github的IP>   github.com" github的IP可能会变，推荐[站长之家](https://tool.chinaz.com/ "网站")  
+  >- 更改**hosts**文件需要管理员权限
+
